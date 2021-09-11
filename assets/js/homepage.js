@@ -1,9 +1,13 @@
+var repoContainerEl = document.querySelector("#repos-container");
+var repoSearchTerm = document.querySelector("#repo-search-term");
+
+
 var getUserRepos = function(user) {
-    // format the github api url
-    var apiUrl = "https://api.github.com/users/" + user + "/repos";
-  
-    // make a request to the url
-    fetch(apiUrl)
+  // format the github api url
+  var apiUrl = "https://api.github.com/users/" + user + "/repos";
+
+  // make a request to the url
+  fetch(apiUrl)
   .then(function(response) {
     // request was successful
     if (response.ok) {
@@ -18,11 +22,10 @@ var getUserRepos = function(user) {
     // Notice this `.catch()` getting chained onto the end of the `.then()` method
     alert("Unable to connect to GitHub");
   });
+  
+};
 
-  };
-  console.log("outside");
-
-  var userFormEl = document.querySelector("#user-form");
+var userFormEl = document.querySelector("#user-form");
 var nameInputEl = document.querySelector("#username");
 
 var formSubmitHandler = function(event) {
@@ -38,8 +41,6 @@ if (username) {
 }
   console.log(event);
 };
-userFormEl.addEventListener("submit", formSubmitHandler);
-
 
 var displayRepos = function(repos, searchTerm) {
   // check if api returned any repos
@@ -47,6 +48,7 @@ if (repos.length === 0) {
   repoContainerEl.textContent = "No repositories found.";
   return;
 }
+
  // clear old content
 repoContainerEl.textContent = "";
 repoSearchTerm.textContent = searchTerm;
@@ -65,7 +67,7 @@ for (var i = 0; i < repos.length; i++) {
 
   // append to container
   repoEl.appendChild(titleEl);
-// create a status element
+  // create a status element
 var statusEl = document.createElement("span");
 statusEl.classList = "flex-row align-center";
 
@@ -79,11 +81,10 @@ if (repos[i].open_issues_count > 0) {
 
 // append to container
 repoEl.appendChild(statusEl);
+
   // append container to the dom
   repoContainerEl.appendChild(repoEl);
 }
 };
 
-var repoContainerEl = document.querySelector("#repos-container");
-var repoSearchTerm = document.querySelector("#repo-search-term");
-
+userFormEl.addEventListener("submit", formSubmitHandler);
